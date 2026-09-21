@@ -93,3 +93,39 @@ M1-M3 are implemented with direct Doctrine runtime dependencies, entity mapping,
 - Market baseline: Medusa v2, Vendure, and Sylius evidence recorded in `docs/product/002-competitor-baseline.adoc`; speculative growth features remain outside RC.
 - Ordering/Shipping integration boundary is materialized in `docs/architecture/003-ordering-shipping-integration.adoc`; no sibling package dependency was introduced into Stocking.
 
+## 2026-09-21 Gating package-adoption verification
+
+### Reconnaissance
+
+- Re-read the live Stocking README, Composer manifests, architecture/product documentation, Doctrine configuration/migration baseline, capability audit, current Git diff, and this journal.
+- Re-read the mandatory dependency contour for Objecting, Cruding, Viewing, and Interfacing from their current package-facing README/Composer contracts.
+- Re-read Gating package identity/CLI documentation and the authoritative Canonization rule texts for Canon000, Canon007, Canon009, Canon018, Canon020, Canon022, Canon023, Canon024, Canon025, Canon026, Canon029, Canon031, Canon032, Canon033, Canon034, Canon039, Canon040, and Canon043.
+- Re-verified the current competitor baseline against current primary Medusa and Vendure documentation. The existing Stocking boundary remains appropriate: per-location stock facts, explicit reservations, separated incoming quantity, and explicit backorder/promise policy belong here; kits/BOM, forecasting, richer allocation optimization, procurement ownership, and admin UX remain growth work.
+
+### Current Stocking mapping
+
+- Development Composer now consumes `gating/gate: dev-master` through a sibling path repository with `symlink: true`.
+- Production Composer remains free of sibling path repositories and resolves Gating through a package/VCS surface.
+- `.gating/` is reduced to generated artifact state only; the prior target-owned `.gating/profile.yaml` is removed, while the explanatory contract is retained under `docs/architecture/gating-artifact-surface.md`.
+- Stocking business/runtime topology remains unchanged: `App\\Stocking\\`, `Stock*`, typed Symfony roots, no generic CRUD controllers/routes, and no Domain/Core/Infrastructure/Port/Adapter/Adaptor topology.
+
+### Verification
+
+- Composer strict validation with lock verification: PASS.
+- PHPUnit: PASS, 49 tests / 141 assertions.
+- Xdebug branch-coverage execution: PASS and persistent summary regenerated.
+- PHPStan: PASS.
+- PHP-CS-Fixer dry-run: PASS.
+- Symfony YAML lint: PASS.
+- Symfony container lint: PASS.
+- Doctrine mapping validation: PASS.
+- Doctrine migrations status: PASS; one forward-only Stocking baseline remains available.
+- Composer install synchronized the new Gating dependency into `vendor/` from the sibling package.
+
+### Gating integration resolution
+
+- The Stocking profile moved from consumer `.gating/` into `config/gating/profile.yaml`; package-owned policy and severity are resolved from the installed `vendor/gating/gate/.gating` surface.
+- A package-scoped `composer update gating/gate --with-all-dependencies` refreshed stale lock/autoload metadata from Gating `7f61914` to `fae1885`, aligning the installed package with its current `App\\Gating\\` runtime namespace.
+- Consumer `.gating/` is now left for generated artifact state only; its explanatory README was moved to `docs/architecture/gating-artifact-surface.md`.
+- Final `composer quality`: PASS, including PHPUnit 49 tests / 141 assertions, coverage 93.0% lines / 80.2% methods / 85.7% branches, PHPStan, YAML/container lint, Doctrine mapping/migration checks, PHP-CS-Fixer, and Gating 18/18 with zero failures/warnings/suppressions/skips.
+

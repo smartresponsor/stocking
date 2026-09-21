@@ -3,7 +3,7 @@ component:
   namespace: App\Stocking
   subject_prefix: Stock
   host_namespaces:
-    - App\\Host
+    - App\\\\Host
   enabled_rules:
     - canon.000.component_prefix
     - canon.007.psr4_identity
