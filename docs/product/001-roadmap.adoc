@@ -1,0 +1,26 @@
+= Stocking Roadmap
+
+== M1
+
+* Stock item identity.
+* Stock/location levels.
+* Available, reserved, and incoming quantities.
+
+== M2
+
+* Reservation lifecycle.
+* Idempotency.
+* Availability checks.
+
+== M3
+
+* Transfers and movements.
+* Allocation extension contracts.
+* Backorder/oversell policy.
+
+== M4
+
+* Ordering/Shipping integration.
+* Concurrency and audit.
+* Competitor benchmark.
+

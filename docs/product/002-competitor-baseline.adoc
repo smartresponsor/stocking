@@ -1,0 +1,23 @@
+= Stocking Competitor Baseline
+
+This is the evidence contract for a later comparison; no unsupported benchmark verdicts are recorded in this skeleton wave.
+
+== Comparison set
+
+* Medusa v2
+* Vendure
+* Sylius
+
+== Classification
+
+AHEAD, PARITY, PARTIAL, MISSING, or NOT_APPLICABLE.
+
+== Evidence per row
+
+* local owning repository
+* local implementation/test/doc evidence
+* competitor capability and evidence
+* boundary decision
+* implementation priority
+* duplication risk
+

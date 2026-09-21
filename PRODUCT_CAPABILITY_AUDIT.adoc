@@ -1,0 +1,33 @@
+= Product Capability Audit: Stocking
+:revdate: 2026-09-20
+
+== Boundary verdict
+
+Stocking has a modern inventory boundary and now implements the M1 inventory identity/quantity baseline. It owns physical/logical stock facts and reservation/allocation semantics, not catalog products, order lifecycle, shipment execution or location master data.
+
+== Capability matrix
+
+[cols="3,1,4",options="header"]
+|===
+|Capability |Status |Audit
+|Stock item identity |IMPLEMENTED |StockItemEntity owns inventory identity and retains Cataloging identity as an opaque reference.
+|Per-location levels |IMPLEMENTED |StockLevelEntity scopes quantity facts by opaque Locating reference.
+|On-hand/available/reserved/incoming |IMPLEMENTED |Independent quantity facts with non-negative and reserved <= on-hand invariants.
+|Available-to-promise |PARTIAL |Deterministic on-hand minus reserved baseline implemented; policy/incoming projection remains M4.
+|Reservation/release/expiry |MISSING |Checkout-critical.
+|Idempotent reservation commands |MISSING |Required for retries.
+|Movement ledger |MISSING |Receipts, allocations, releases, adjustments and transfers.
+|Adjustments/reconciliation |MISSING |Operational baseline.
+|Transfers |MISSING |Needed for multi-location inventory.
+|Backorder/oversell policy |MISSING |Modern configurable capability.
+|Incoming/replenishment projection |MISSING |Needed for availability promises.
+|Concurrency protection |MISSING |Must prevent oversell under parallel checkout.
+|===
+
+== Milestone direction
+
+M1: StockItem + StockLevel + quantity invariants.
+M2: reservation lifecycle, idempotency and concurrency.
+M3: movement ledger, transfers, adjustments and reconciliation.
+M4: ATP/backorder/incoming plus Ordering/Shipping integration.
+

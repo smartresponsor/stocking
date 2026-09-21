@@ -1,0 +1,25 @@
+= Stocking Canonization Map
+
+[cols="1,3"]
+|===
+| Canon | Stocking mapping
+
+| Canon000 | Subject vocabulary is `Stock*`; Symfony bootstrap `Kernel` and `StockingBundle` are framework exceptions.
+| Canon007 | `App\\Stocking\\ => src/` is literal PSR-4 identity.
+| Canon009 | No Host implementation dependency is introduced.
+| Canon018 | Composer identity is `stocking/stock`; namespace and subject derive literally from its tokens.
+| Canon020 | No generic Domain/Core/Support/Runtime/Infrastructure/Utility/Helper or Port/Adapter/Adaptor roots are created.
+| Canon022 | Standalone runtime directly requires the full platform baseline and EasyAdmin.
+| Canon023 | Development sibling path repositories use `symlink: true`.
+| Canon024 | Production Composer has no sibling path repositories.
+| Canon025 | Standalone console/config/kernel plus reusable bundle provide dual runtime mode.
+| Canon026 | PHP `^8.4`; Symfony `^8.1`.
+| Canon029 | PHP-CS-Fixer and PHPStan dependencies/config/scripts are repository-owned.
+| Canon031 | Production bootstrap classes carry meaningful English PHPDoc.
+| Canon032 | Self bundle is registered in standalone mode.
+| Canon033 | Development/production Composer identity fields match.
+| Canon034 | Repository noise baseline is ignored.
+| Canon039 | PHPUnit owns tests and persistent branch-coverage summary contract over `src/`.
+| Canon043 | Local sibling dependencies use exact `dev-master` plus path version identity.
+|===
+
