@@ -1,9 +1,9 @@
 = Product Capability Audit: Stocking
-:revdate: 2026-09-20
+:revdate: 2026-09-21
 
 == Boundary verdict
 
-Stocking has a modern inventory boundary and now implements the M1 inventory identity/quantity baseline. It owns physical/logical stock facts and reservation/allocation semantics, not catalog products, order lifecycle, shipment execution or location master data.
+Stocking now implements the RC-critical inventory core across M1-M4: quantity facts, reservation lifecycle, durable idempotency, concurrency protection, append-oriented movement audit, replenishment, strict ATP and explicit promise policy. It owns physical/logical stock facts and reservation/allocation semantics, not catalog products, pricing, cart lifecycle, order lifecycle, shipment execution, or location/address master data.
 
 == Capability matrix
 
@@ -13,15 +13,16 @@ Stocking has a modern inventory boundary and now implements the M1 inventory ide
 |Stock item identity |IMPLEMENTED |StockItemEntity owns inventory identity and retains Cataloging identity as an opaque reference.
 |Per-location levels |IMPLEMENTED |StockLevelEntity scopes quantity facts by opaque Locating reference.
 |On-hand/available/reserved/incoming |IMPLEMENTED |Independent quantity facts with non-negative and reserved <= on-hand invariants.
-|Available-to-promise |PARTIAL |Deterministic on-hand minus reserved baseline implemented; policy/incoming projection remains M4.
-|Reservation/release/expiry |MISSING |Checkout-critical.
-|Idempotent reservation commands |MISSING |Required for retries.
-|Movement ledger |MISSING |Receipts, allocations, releases, adjustments and transfers.
-|Adjustments/reconciliation |MISSING |Operational baseline.
-|Transfers |MISSING |Needed for multi-location inventory.
-|Backorder/oversell policy |MISSING |Modern configurable capability.
-|Incoming/replenishment projection |MISSING |Needed for availability promises.
-|Concurrency protection |MISSING |Must prevent oversell under parallel checkout.
+|Available-to-promise |IMPLEMENTED |Strict ATP is on-hand minus reserved; policy-aware promise capacity can explicitly include incoming and/or a bounded backorder allowance without mutating physical stock facts.
+|Reservation/release/expiry |IMPLEMENTED |StockReservationEntity provides active/released/expired/consumed lifecycle with invariant-safe level mutations.
+|Idempotent reservation commands |IMPLEMENTED |Durable unique reservation keys plus transaction-scoped replay handling cover reserve/release/expire/consume without double mutation.
+|Movement ledger |IMPLEMENTED |Doctrine-backed append-oriented StockMovementEntity records independent on-hand/reserved/incoming deltas with unique retry identities for reservation, release, consumption, receipt, replenishment, transfer and reconciliation facts.
+|Adjustments/reconciliation |IMPLEMENTED |StockReconciliationService reconciles physical count while preserving reservations and emits adjustment evidence.
+|Transfers |IMPLEMENTED |StockTransferService moves only available stock between distinct locations and emits paired transfer-out/transfer-in facts.
+|Backorder/oversell policy |IMPLEMENTED |StockPromisePolicy keeps physical reservation invariants strict while allowing an explicit bounded promise allowance beyond immediate stock.
+|Incoming/replenishment projection |IMPLEMENTED |Incoming scheduling/receipt is persisted and audited; incoming contributes to promise capacity only under an explicit policy.
+|Concurrency protection |IMPLEMENTED |StockLevel uses Objecting canonical Doctrine optimistic versioning; integration tests prove a stale concurrent writer is rejected with OptimisticLockException.
+|Ordering/Shipping integration |IMPLEMENTED |Stocking-side integration contract is materialized in `docs/architecture/003-ordering-shipping-integration.adoc`: sibling identities stay opaque, reserve/release/consume/expiry transitions are explicit, and composition performs SKU/location translation without Stocking importing Ordering or Shipping.
 |===
 
 == Milestone direction

@@ -9,6 +9,8 @@
     "php": "^8.4",
     "collectioning/collection": "dev-master",
     "cruding/crud": "dev-master",
+    "doctrine/doctrine-bundle": "^3.3",
+    "doctrine/orm": "^3.7",
     "easycorp/easyadmin-bundle": "^5.5",
     "interfacing/interface": "dev-master",
     "objecting/object": "dev-master",

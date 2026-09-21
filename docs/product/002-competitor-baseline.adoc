@@ -1,23 +1,44 @@
 = Stocking Competitor Baseline
+:revdate: 2026-09-21
 
-This is the evidence contract for a later comparison; no unsupported benchmark verdicts are recorded in this skeleton wave.
+== Scope
 
-== Comparison set
+This benchmark is descriptive, not a product ranking. It compares mature inventory patterns that materially affect Stocking's RC boundary.
 
-* Medusa v2
-* Vendure
-* Sylius
+== Medusa v2
 
-== Classification
+Evidence: https://docs.medusajs.com/resources/commerce-modules/inventory[Medusa Inventory Module] and https://docs.medusajs.com/resources/commerce-modules/inventory/reservations-lifecycle[Reservations Lifecycle].
 
-AHEAD, PARITY, PARTIAL, MISSING, or NOT_APPLICABLE.
+* Inventory items have location-scoped levels.
+* Reservations increase reserved quantity while stocked quantity remains physically present.
+* Ordinary available quantity is stocked minus reserved.
+* Incoming quantity is tracked separately and does not affect ordinary availability checks.
+* Fulfillment consumes both stocked and reserved quantities.
 
-== Evidence per row
+Stocking decision: PARITY for the core quantity/reservation separation. Stocking keeps incoming excluded from strict ATP and only admits it through an explicit promise policy.
 
-* local owning repository
-* local implementation/test/doc evidence
-* competitor capability and evidence
-* boundary decision
-* implementation priority
-* duplication risk
+== Vendure
 
+Evidence: https://docs.vendure.io/current/core/reference/typescript-api/services/stock-level-service[StockLevelService] and https://docs.vendure.io/current/core/user-guide/settings/global-settings[Global Settings].
+
+* Stock levels expose stock-on-hand and stock-allocated facts per location.
+* Available stock is computed through configured stock-location strategy.
+* A negative out-of-stock threshold enables bounded backorder behavior.
+
+Stocking decision: PARITY in the RC capability shape. StockPromisePolicy provides an explicit bounded backorder allowance without allowing StockLevel physical reservation invariants to go negative.
+
+== Sylius
+
+Evidence: https://github.com/Sylius/Inventory[Sylius Inventory component] and the current https://github.com/Sylius/Sylius[Sylius repository].
+
+* The standalone Inventory component establishes a dedicated inventory domain.
+* Historical/current Sylius inventory semantics use separate on-hand/on-hold concepts.
+* Current Sylius 2.3 documentation advertises multi-source inventory as an advanced capability.
+
+Stocking decision: PARITY for the boundary principle and multi-location quantity facts. No Sylius-specific lifecycle behavior is copied without current primary evidence.
+
+== RC versus growth
+
+RC-critical capabilities are now: location-scoped stock facts, strict quantity invariants, reservation lifecycle, durable idempotency, concurrency protection, append-oriented movement audit, transfers/reconciliation, replenishment, strict ATP and explicit promise policy.
+
+Growth work remains outside the current RC gate: inventory kits/BOM decomposition, richer allocation optimization across many locations, forecasting/safety stock, purchase-order ownership, and UI/admin workflows. Those features must not be introduced by stealing Cataloging, Ordering, Shipping, Locating, or procurement truth.

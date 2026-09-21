@@ -36,6 +36,54 @@ final class StockLevelEntityTest extends TestCase
         self::assertSame(2, $level->incoming());
     }
 
+    public function testExposesExternalIdentitiesAndDirectReceipt(): void
+    {
+        $level = new StockLevelEntity('stock-1', 'location-1');
+        self::assertSame('stock-1', $level->stockItemId());
+        self::assertSame('location-1', $level->locationReference());
+
+        $level->receive(3);
+
+        self::assertSame(3, $level->onHand());
+        self::assertSame(3, $level->available());
+    }
+
+    public function testCannotReceiveIncomingBeyondScheduledQuantity(): void
+    {
+        $level = new StockLevelEntity('stock-1', 'location-1', incoming: 2);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $level->receiveIncoming(3);
+    }
+
+    public function testCannotReleaseMoreThanReserved(): void
+    {
+        $level = new StockLevelEntity('stock-1', 'location-1', onHand: 3, reserved: 1);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $level->release(2);
+    }
+
+    public function testCannotConsumeMoreThanReserved(): void
+    {
+        $level = new StockLevelEntity('stock-1', 'location-1', onHand: 3, reserved: 1);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $level->consumeReserved(2);
+    }
+
+    public function testRejectsBlankStockAndLocationIdentities(): void
+    {
+        try {
+            new StockLevelEntity('', 'location-1');
+            self::fail('Blank stock identity must fail.');
+        } catch (\InvalidArgumentException) {
+        }
+
+        $this->expectException(\InvalidArgumentException::class);
+        new StockLevelEntity('stock-1', ' ');
+    }
+
     public function testCannotReserveMoreThanAvailable(): void
     {
         $level = new StockLevelEntity('stock-1', 'location-1', onHand: 2);

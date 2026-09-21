@@ -9,18 +9,18 @@
 == M2
 
 * Reservation lifecycle.
-* Idempotency.
-* Availability checks.
+* Durable idempotency.
+* Concurrency-safe availability checks.
 
 == M3
 
-* Transfers and movements.
+* Append-oriented movement persistence.
+* Transfers, adjustments, and reconciliation.
 * Allocation extension contracts.
-* Backorder/oversell policy.
 
 == M4
 
-* Ordering/Shipping integration.
-* Concurrency and audit.
-* Competitor benchmark.
+* Ordering/Shipping integration boundary: implemented in `../architecture/003-ordering-shipping-integration.adoc`; Stocking stays independent while composition translates sibling identities into Stocking item/location operations.
+* Backorder/oversell policy and incoming projection: implemented with strict physical invariants and explicit promise policy.
+* Competitor benchmark: materialized in `002-competitor-baseline.adoc`.
 

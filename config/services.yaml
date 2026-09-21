@@ -1,2 +1,14 @@
-services: { }
+parameters:
+    stocking_database_url: 'sqlite:///%kernel.cache_dir%/stocking.db'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\Stocking\Repository\:
+        resource: '../src/Repository/'
+
+    App\Stocking\Service\:
+        resource: '../src/Service/'
 

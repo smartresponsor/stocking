@@ -1,0 +1,63 @@
+= Ordering and Shipping Integration Contract
+:revdate: 2026-09-21
+
+== Boundary
+
+Stocking remains independent from Ordering and Shipping packages.
+
+* Ordering owns order lifecycle, line-item/SKU semantics, and its own `InventoryGatewayInterface`.
+* Shipping owns shipment and fulfillment execution and does not own inventory reservation.
+* Stocking owns stock-item identity, location-scoped quantity facts, reservation lifecycle, movement facts, ATP, and promise policy.
+
+No Stocking entity or service may persist an order, shipment, SKU, catalog product, address, or location master record.
+
+== Composition mapping
+
+Host/composition code resolves sibling identities before invoking Stocking:
+
+. Cataloging/Ordering SKU or product identity is resolved to an opaque Stocking `stockItemId`.
+. Locating identity is passed as an opaque `locationReference`.
+. Ordering retry identity becomes the Stocking reservation idempotency key.
+. Ordering or fulfillment references may be recorded only as opaque movement `reference` values.
+
+Stocking never reverse-resolves those opaque references into sibling-owned records.
+
+== Order placement
+
+The composition adapter performs a policy-aware availability check through `StockAvailabilityService`, then calls `StockReservationPersistenceService::reserve()` for the selected Stocking item/location.
+
+Strict physical reservation remains limited to immediately available stock. A policy may promise incoming/backordered quantity, but such promise capacity must not be represented as physically reserved stock until inventory is actually available.
+
+== Cancellation
+
+Order cancellation releases an active Stocking reservation through `StockReservationPersistenceService::release()`.
+
+The operation is retry-safe and emits a durable reserved-bucket movement fact in the same transaction.
+
+== Fulfillment
+
+Fulfillment consumes an active reservation through `StockReservationPersistenceService::consume()`.
+
+The transaction decrements both reserved and on-hand buckets and appends a consumption movement. Shipping execution occurs after or around this inventory transition according to host workflow orchestration; Shipping does not mutate Stocking tables directly.
+
+== Expiry
+
+A scheduler or workflow coordinator may call `StockReservationPersistenceService::expire()` after the reservation deadline.
+
+Expiry releases only the reserved bucket, is retry-safe, and remains independent of order/shipment lifecycle ownership.
+
+== Concurrency and retries
+
+All mutation commands carry idempotency identities. `StockLevelEntity` uses Objecting's Doctrine optimistic version field so stale parallel writers fail rather than silently oversell physical inventory.
+
+The composition layer may retry a failed command with the same idempotency identity. It must not generate a new key for an uncertain retry of the same logical operation.
+
+== Not owned here
+
+The composition layer remains responsible for:
+
+* SKU/catalog-to-stock-item resolution;
+* choosing the location used for an order;
+* mapping order cancellation/fulfillment events to Stocking commands;
+* deciding workflow compensation if a downstream shipment operation fails after inventory consumption;
+* transporting events/messages between sibling components.

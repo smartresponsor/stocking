@@ -9,6 +9,8 @@
     "php": "^8.4",
     "collectioning/collection": "dev-master",
     "cruding/crud": "dev-master",
+    "doctrine/doctrine-bundle": "^3.3",
+    "doctrine/orm": "^3.7",
     "easycorp/easyadmin-bundle": "^5.5",
     "interfacing/interface": "dev-master",
     "objecting/object": "dev-master",
@@ -19,6 +21,7 @@
     "viewing/view": "dev-master"
   },
   "require-dev": {
+    "doctrine/doctrine-migrations-bundle": "^4.0",
     "friendsofphp/php-cs-fixer": "^3.95",
     "phpstan/phpstan": "^2.2",
     "phpunit/phpunit": "^13.3"
@@ -108,12 +111,20 @@
       "@php -d xdebug.mode=coverage vendor/bin/phpunit --branch-coverage --coverage-text=var/coverage/summary.txt"
     ],
     "phpstan": "phpstan analyse -c phpstan.neon",
+    "lint:yaml": "php bin/console lint:yaml config --parse-tags --env=test",
+    "lint:container": "php bin/console lint:container --env=test",
+    "db:schema:validate": "php bin/console doctrine:schema:validate --skip-sync --env=test",
+    "db:migrations:status": "php bin/console doctrine:migrations:status --env=test",
     "cs:check": "php-cs-fixer fix --dry-run --diff --verbose",
     "cs:fix": "php-cs-fixer fix --verbose",
     "gate": "@php ../Gating/bin/gating check --target=. --profile=.gating/profile.yaml --policy-root=../Gating/.gating --severity-config=../Gating/.gating/config/severity.yaml",
     "quality": [
-      "@test",
+      "@test:coverage",
       "@phpstan",
+      "@lint:yaml",
+      "@lint:container",
+      "@db:schema:validate",
+      "@db:migrations:status",
       "@cs:check",
       "@gate"
     ]

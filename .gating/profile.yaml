@@ -21,6 +21,7 @@ component:
     - canon.033.composer_manifest_identity_parity
     - canon.034.gitignore_baseline
     - canon.039.php_test_tooling
+    - canon.040.php_test_coverage
     - canon.043.development_composer_dependency_version
   mutation_mode: guarded
   secret_scan: enabled
@@ -30,4 +31,3 @@ component:
     required_files:
       - composer.json
       - composer.prod.json
-

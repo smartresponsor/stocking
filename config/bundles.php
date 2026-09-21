@@ -2,8 +2,15 @@
 
 declare(strict_types=1);
 
-return [
+$bundles = [
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
+    Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => ['all' => true],
     App\Stocking\StockingBundle::class => ['all' => true],
 ];
+
+if (class_exists(Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class)) {
+    $bundles[Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class] = ['all' => true];
+}
+
+return $bundles;
 

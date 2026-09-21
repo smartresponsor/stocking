@@ -4,16 +4,31 @@ declare(strict_types=1);
 
 namespace App\Stocking\Entity;
 
+use App\Objecting\EntityInterface\ObjectVersionedInterface;
+use App\Objecting\EntityTrait\Embeddable\ObjectVersionEmbeddableTrait;
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Holds quantity facts for one stock item at one externally-owned location.
  */
-final class StockLevelEntity
+#[ORM\Entity]
+#[ORM\Table(name: 'stock_level')]
+final class StockLevelEntity implements ObjectVersionedInterface
 {
+    use ObjectVersionEmbeddableTrait;
+
     public function __construct(
+        #[ORM\Id]
+        #[ORM\Column(name: 'stock_item_id', type: 'string', length: 64)]
         private readonly string $stockItemId,
+        #[ORM\Id]
+        #[ORM\Column(name: 'location_reference', type: 'string', length: 128)]
         private readonly string $locationReference,
+        #[ORM\Column(name: 'on_hand', type: 'integer')]
         private int $onHand = 0,
+        #[ORM\Column(type: 'integer')]
         private int $reserved = 0,
+        #[ORM\Column(type: 'integer')]
         private int $incoming = 0,
     ) {
         if ('' === trim($this->stockItemId)) {
@@ -22,6 +37,7 @@ final class StockLevelEntity
         if ('' === trim($this->locationReference)) {
             throw new \InvalidArgumentException('Location reference must not be empty.');
         }
+        $this->initializeObjectVersion();
         $this->assertQuantities();
     }
 

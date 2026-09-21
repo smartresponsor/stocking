@@ -26,5 +26,7 @@ owns inventory availability, stock levels, reservations, incoming quantities, ad
 
 == Current materialization scope
 
-The repository now includes the M1 inventory model: inventory-owned stock item identity, location-scoped stock levels, quantity invariants, and deterministic baseline availability. Reservation persistence/concurrency, movement ledger, policy projection, and sibling integrations remain later milestones.
+The repository now implements the RC-critical Stocking core: inventory-owned stock item identity; location-scoped on-hand/reserved/incoming facts; strict physical invariants; durable reservation lifecycle; replay-safe idempotent mutations; Objecting-backed optimistic locking; append-oriented bucket-delta movement facts; transfers; reconciliation; supply/replenishment mutations; strict ATP; and explicit incoming/backorder promise policy.
+
+Ordering and Shipping remain consumers/coordinators rather than dependencies of Stocking. Ordering owns order lifecycle and its InventoryGatewayInterface/SKU vocabulary; Shipping owns shipment execution and explicitly does not own inventory reservation. Composition code must translate sibling identities into Stocking-owned stock-item/location operations without moving those truths into this component.
 
