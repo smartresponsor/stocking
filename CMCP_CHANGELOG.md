@@ -251,5 +251,14 @@ M1-M3 are implemented with direct Doctrine runtime dependencies, entity mapping,
 - The approved RC release wrapper was retried with `dirtyPolicy=allow_existing_readonly`, no repair/commit mutation, and `push_on_green`; its Console MCP call timed out and post-call branch inspection proves no push occurred.
 - Final safe integration blocker: available Console MCP push capability requires a clean worktree and no separate bounded push lifecycle exists for publishing the already-committed HEAD while preserving unrelated dirty paths. The `.gating/**` state is intentionally untouched; GitHub API or destructive/stash workarounds were not used.
 
+## 2026-09-25 Work 3 generated-artifact cleanup and integration
+
+- Reclassified the remaining dirty worktree instead of committing it blindly. The 31 untracked `.gating/**` paths are a copied/generated Gating package tree, not Stocking-owned source; the tracked `.gating/README.md` had also been overwritten by the Gating repository README.
+- Preserved the physical generated files and avoided destructive cleanup. Restored the tracked Stocking consumer-artifact README exactly from HEAD and added `/.gating/*` with `!/.gating/README.md` to `.gitignore`, so generated Gating spill no longer dirties the Stocking worktree while the canonical explanatory README remains tracked.
+- Canon034 rationale: generated/local state stays outside source history; this is repository-specific equivalent ignore coverage, not a change to Stocking runtime behavior.
+- Post-fix verification is GREEN: development Composer strict validation/check-lock PASS; production `validate:prod` PASS; PHPUnit coverage PASS (49 tests / 142 assertions; lines 92.99%, methods 80.72%, branches 85.77%); Playwright 1/1 PASS; PHPStan level 8 PASS; Symfony YAML/container lint PASS; Doctrine fresh schema parity and migrations status PASS; PHP-CS-Fixer dry-run PASS; Gating 9/9 PASS with zero failures or warnings.
+- No UI/runtime behavior changed; visual evidence remains not applicable.
+
+
 
 

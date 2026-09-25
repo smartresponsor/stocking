@@ -13,4 +13,6 @@ test-results/
 /config/reference.php
 /.env.local
 /.env.*.local
+/.gating/*
+!/.gating/README.md
 
