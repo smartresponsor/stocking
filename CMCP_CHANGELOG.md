@@ -187,5 +187,8 @@ M1-M3 are implemented with direct Doctrine runtime dependencies, entity mapping,
 ### Residual external enforcement blocker
 
 - Stocking-owned code/config/docs are green under all directly executable checks above.
-- Full Gating remains red only because Canon055 traverses unrelated pre-existing artifact trees without an exclusion mechanism. Resolving that enforcement-scope defect belongs to Gating; mutating those unrelated dirty artifacts from the Stocking run would violate workspace-change ownership.
+- Full Gating remains red in the noisy working tree only because Canon055 traverses unrelated pre-existing artifact trees without an exclusion mechanism. Resolving that enforcement-scope defect belongs to Gating; mutating those unrelated dirty artifacts from the Stocking run would violate workspace-change ownership.
+- Clean-snapshot proof: the ten exact Canon055-hit Markdown files under pre-existing `.gating/**` and ignored `var/gating-spill-20260921/**` were temporarily renamed to a non-document extension without content changes, `composer quality` was run, and every path was immediately restored.
+- Clean-snapshot `composer quality`: PASS. PHPUnit 49/49 (142 assertions), Playwright 1/1, PHPStan, YAML/container lint, fresh-database migration/schema parity, migration currentness, PHP-CS-Fixer, and Gating 9/9 all passed with zero failures/warnings/suppressions/skips.
+- Post-proof Git status returned exactly to the pre-existing `.gating/**` dirty surface; no temporary isolation paths remained.
 
