@@ -244,4 +244,12 @@ M1-M3 are implemented with direct Doctrine runtime dependencies, entity mapping,
 - A single aggregate `composer quality` invocation exceeded the Console MCP orchestration-call timeout, so it is not claimed as an aggregate pass; every constituent command in that script was executed directly and passed, including the newly added production-manifest validation.
 - No browser/mobile application behavior or UI source changed; visual screenshot evidence is therefore not applicable to this patch.
 
+### Integration state
+
+- Signed commit `f5ab3d7ceb4f67a874519101a1e49342ccbf9553` created with only `composer.json` and `CMCP_CHANGELOG.md`.
+- Direct guarded push was refused because the worktree contains pre-existing unrelated `.gating/**` changes.
+- The approved RC release wrapper was retried with `dirtyPolicy=allow_existing_readonly`, no repair/commit mutation, and `push_on_green`; its Console MCP call timed out and post-call branch inspection proves no push occurred.
+- Final safe integration blocker: available Console MCP push capability requires a clean worktree and no separate bounded push lifecycle exists for publishing the already-committed HEAD while preserving unrelated dirty paths. The `.gating/**` state is intentionally untouched; GitHub API or destructive/stash workarounds were not used.
+
+
 
