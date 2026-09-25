@@ -9,6 +9,8 @@
 .DS_Store
 Thumbs.db
 node_modules/
+test-results/
+/config/reference.php
 /.env.local
 /.env.*.local
 

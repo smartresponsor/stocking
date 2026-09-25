@@ -7,7 +7,7 @@ namespace App\Stocking\Service;
 use App\Stocking\Entity\StockMovementEntity;
 use App\Stocking\Repository\StockLevelRepository;
 use App\Stocking\Repository\StockMovementRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Stocking\Repository\StockTransactionRepository;
 
 /**
  * Persists reconciliation adjustments and their immutable movement evidence atomically.
@@ -15,7 +15,7 @@ use Doctrine\ORM\EntityManagerInterface;
 final class StockReconciliationPersistenceService
 {
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
+        private readonly StockTransactionRepository $transactionRepository,
         private readonly StockLevelRepository $levelRepository,
         private readonly StockMovementRepository $movementRepository,
         private readonly StockReconciliationService $reconciliationService,
@@ -32,7 +32,7 @@ final class StockReconciliationPersistenceService
         \DateTimeImmutable $occurredAt,
         ?string $reference = null,
     ): ?StockMovementEntity {
-        return $this->entityManager->wrapInTransaction(function () use (
+        return $this->transactionRepository->transactional(function () use (
             $stockItemId,
             $locationReference,
             $countedOnHand,

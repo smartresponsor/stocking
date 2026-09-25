@@ -1,0 +1,21 @@
+component:
+  name: Stocking
+  nameEntity: stock
+  namespace: App\Stocking
+  business_prefix: Stock
+  subject_prefix: Stock
+  subject_tokens:
+    - Stock
+  database_prefix: stock_
+  typed_layers_required: true
+  service_interface_mirror: false
+  host_namespaces:
+    - App\\\\Host
+  mutation_mode: guarded
+  secret_scan: enabled
+  docblock_preservation: enabled
+  release:
+    evidence_required: false
+    required_files:
+      - composer.json
+      - composer.prod.json

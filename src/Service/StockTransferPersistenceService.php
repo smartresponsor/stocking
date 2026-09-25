@@ -7,7 +7,7 @@ namespace App\Stocking\Service;
 use App\Stocking\Entity\StockMovementEntity;
 use App\Stocking\Repository\StockLevelRepository;
 use App\Stocking\Repository\StockMovementRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Stocking\Repository\StockTransactionRepository;
 
 /**
  * Applies idempotent multi-location transfers in one optimistic-locking transaction.
@@ -15,7 +15,7 @@ use Doctrine\ORM\EntityManagerInterface;
 final class StockTransferPersistenceService
 {
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
+        private readonly StockTransactionRepository $transactionRepository,
         private readonly StockLevelRepository $levelRepository,
         private readonly StockMovementRepository $movementRepository,
         private readonly StockTransferService $transferService,
@@ -34,7 +34,7 @@ final class StockTransferPersistenceService
         \DateTimeImmutable $occurredAt,
         string $transferReference,
     ): array {
-        return $this->entityManager->wrapInTransaction(function () use (
+        return $this->transactionRepository->transactional(function () use (
             $stockItemId,
             $sourceLocationReference,
             $destinationLocationReference,

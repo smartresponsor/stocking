@@ -1,6 +1,6 @@
 {
   "name": "stocking/stock",
-  "description": "SmartResponsor Stocking component: owns inventory availability, stock levels, reservations, incoming quantities, adjustments, and movements across stock locations.",
+  "description": "Stocking component for the multi-domain SaaS platform: owns inventory availability, stock levels, reservations, incoming quantities, adjustments, and movements across stock locations.",
   "type": "symfony-bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
@@ -10,6 +10,7 @@
     "collectioning/collection": "dev-master",
     "cruding/crud": "dev-master",
     "doctrine/doctrine-bundle": "^3.3",
+    "doctrine/doctrine-migrations-bundle": "^4.0",
     "doctrine/orm": "^3.7",
     "easycorp/easyadmin-bundle": "^5.5",
     "interfacing/interface": "dev-master",

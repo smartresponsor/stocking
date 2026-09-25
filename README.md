@@ -1,6 +1,6 @@
 # Stocking
 
-Stocking is the SmartResponsor Symfony component that owns inventory availability, stock levels, reservations, incoming quantities, adjustments, and movements across stock locations.
+Stocking is the Symfony component that owns inventory availability, stock levels, reservations, incoming quantities, adjustments, and movements across stock locations in the multi-domain SaaS platform.
 
 It supports standalone Symfony execution and reusable bundle composition. The canonical product boundary is in `docs/architecture/001-boundary.adoc`.
 

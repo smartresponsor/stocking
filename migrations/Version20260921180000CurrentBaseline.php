@@ -41,7 +41,7 @@ final class Version20260921180000CurrentBaseline extends AbstractMigration
         $this->addSql('CREATE TABLE stock_item (id VARCHAR(64) NOT NULL, catalog_reference VARCHAR(128) NOT NULL, PRIMARY KEY (id))');
         $this->addSql('CREATE UNIQUE INDEX uniq_stock_item_catalog_reference ON stock_item (catalog_reference)');
 
-        $this->addSql('CREATE TABLE stock_level (stock_item_id VARCHAR(64) NOT NULL, location_reference VARCHAR(128) NOT NULL, on_hand INT NOT NULL, reserved INT NOT NULL, incoming INT NOT NULL, version INT NOT NULL, etag VARCHAR(128) DEFAULT NULL, PRIMARY KEY (stock_item_id, location_reference))');
+        $this->addSql('CREATE TABLE stock_level (stock_item_id VARCHAR(64) NOT NULL, location_reference VARCHAR(128) NOT NULL, on_hand INT NOT NULL, reserved INT NOT NULL, incoming INT NOT NULL, version INT DEFAULT 1 NOT NULL, etag VARCHAR(128) DEFAULT NULL, PRIMARY KEY (stock_item_id, location_reference))');
 
         $this->addSql('CREATE TABLE stock_reservation (id VARCHAR(64) NOT NULL, idempotency_key VARCHAR(128) NOT NULL, stock_item_id VARCHAR(64) NOT NULL, location_reference VARCHAR(128) NOT NULL, quantity INT NOT NULL, expires_at TIMESTAMP NOT NULL, status VARCHAR(16) NOT NULL, PRIMARY KEY (id))');
         $this->addSql('CREATE UNIQUE INDEX uniq_stock_reservation_idempotency ON stock_reservation (idempotency_key)');

@@ -8,6 +8,7 @@ use App\Stocking\Entity\StockLevelEntity;
 use App\Stocking\Repository\StockLevelRepository;
 use App\Stocking\Repository\StockMovementRepository;
 use App\Stocking\Repository\StockReservationRepository;
+use App\Stocking\Repository\StockTransactionRepository;
 use App\Stocking\Service\StockReservationPersistenceService;
 use App\Stocking\Service\StockReservationService;
 use Doctrine\DBAL\DriverManager;
@@ -30,7 +31,7 @@ final class StockReservationPersistenceServiceTest extends TestCase
         $em->flush();
 
         $service = new StockReservationPersistenceService(
-            $em,
+            new StockTransactionRepository($em),
             new StockLevelRepository($em),
             new StockReservationRepository($em),
             new StockMovementRepository($em),
@@ -76,7 +77,7 @@ final class StockReservationPersistenceServiceTest extends TestCase
         $em->flush();
 
         $service = new StockReservationPersistenceService(
-            $em,
+            new StockTransactionRepository($em),
             new StockLevelRepository($em),
             new StockReservationRepository($em),
             new StockMovementRepository($em),
@@ -239,7 +240,7 @@ final class StockReservationPersistenceServiceTest extends TestCase
     private function service(EntityManager $em): StockReservationPersistenceService
     {
         return new StockReservationPersistenceService(
-            $em,
+            new StockTransactionRepository($em),
             new StockLevelRepository($em),
             new StockReservationRepository($em),
             new StockMovementRepository($em),

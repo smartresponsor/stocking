@@ -9,7 +9,7 @@ use App\Stocking\Entity\StockReservationEntity;
 use App\Stocking\Repository\StockLevelRepository;
 use App\Stocking\Repository\StockMovementRepository;
 use App\Stocking\Repository\StockReservationRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Stocking\Repository\StockTransactionRepository;
 
 /**
  * Applies durable idempotent reservation commands inside one Doctrine transaction.
@@ -17,7 +17,7 @@ use Doctrine\ORM\EntityManagerInterface;
 final class StockReservationPersistenceService
 {
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
+        private readonly StockTransactionRepository $transactionRepository,
         private readonly StockLevelRepository $levelRepository,
         private readonly StockReservationRepository $reservationRepository,
         private readonly StockMovementRepository $movementRepository,
@@ -39,7 +39,7 @@ final class StockReservationPersistenceService
         \DateTimeImmutable $expiresAt,
         \DateTimeImmutable $now,
     ): StockReservationEntity {
-        return $this->entityManager->wrapInTransaction(function () use (
+        return $this->transactionRepository->transactional(function () use (
             $stockItemId,
             $locationReference,
             $reservationId,
@@ -90,7 +90,7 @@ final class StockReservationPersistenceService
         string $idempotencyKey,
         \DateTimeImmutable $occurredAt,
     ): StockReservationEntity {
-        return $this->entityManager->wrapInTransaction(function () use (
+        return $this->transactionRepository->transactional(function () use (
             $reservationId,
             $idempotencyKey,
             $occurredAt,
@@ -130,7 +130,7 @@ final class StockReservationPersistenceService
         string $idempotencyKey,
         \DateTimeImmutable $occurredAt,
     ): StockReservationEntity {
-        return $this->entityManager->wrapInTransaction(function () use (
+        return $this->transactionRepository->transactional(function () use (
             $reservationId,
             $idempotencyKey,
             $occurredAt,
@@ -171,7 +171,7 @@ final class StockReservationPersistenceService
         string $idempotencyKey,
         \DateTimeImmutable $now,
     ): bool {
-        return $this->entityManager->wrapInTransaction(function () use (
+        return $this->transactionRepository->transactional(function () use (
             $reservationId,
             $idempotencyKey,
             $now,

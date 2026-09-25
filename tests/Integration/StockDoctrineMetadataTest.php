@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Stocking\Tests\Integration;
 
+use App\Stocking\Entity\StockItemEntity;
 use App\Stocking\Entity\StockLevelEntity;
 use App\Stocking\Entity\StockMovementEntity;
 use App\Stocking\Entity\StockReservationEntity;
@@ -24,13 +25,15 @@ final class StockDoctrineMetadataTest extends TestCase
     {
         $em = $this->entityManager();
 
+        $item = $em->getClassMetadata(StockItemEntity::class);
         $level = $em->getClassMetadata(StockLevelEntity::class);
         $reservation = $em->getClassMetadata(StockReservationEntity::class);
         $movement = $em->getClassMetadata(StockMovementEntity::class);
 
-        self::assertSame('objectVersion', $level->versionField);
-        self::assertTrue($reservation->isUniqueField('idempotencyKey'));
-        self::assertTrue($movement->isUniqueField('idempotencyKey'));
+        self::assertSame('version', $level->versionField);
+        self::assertArrayHasKey('uniq_stock_item_catalog_reference', $item->table['uniqueConstraints'] ?? []);
+        self::assertArrayHasKey('uniq_stock_reservation_idempotency', $reservation->table['uniqueConstraints'] ?? []);
+        self::assertArrayHasKey('uniq_stock_movement_idempotency', $movement->table['uniqueConstraints'] ?? []);
     }
 
     public function testStockLevelRepositoryPersistsAndReloadsLevel(): void

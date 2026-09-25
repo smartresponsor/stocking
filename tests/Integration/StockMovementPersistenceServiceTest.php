@@ -7,6 +7,7 @@ namespace App\Stocking\Tests\Integration;
 use App\Stocking\Entity\StockLevelEntity;
 use App\Stocking\Repository\StockLevelRepository;
 use App\Stocking\Repository\StockMovementRepository;
+use App\Stocking\Repository\StockTransactionRepository;
 use App\Stocking\Service\StockReconciliationPersistenceService;
 use App\Stocking\Service\StockReconciliationService;
 use App\Stocking\Service\StockSupplyPersistenceService;
@@ -32,7 +33,7 @@ final class StockMovementPersistenceServiceTest extends TestCase
         $em->flush();
 
         $service = new StockTransferPersistenceService(
-            $em,
+            new StockTransactionRepository($em),
             new StockLevelRepository($em),
             new StockMovementRepository($em),
             new StockTransferService(),
@@ -80,7 +81,7 @@ final class StockMovementPersistenceServiceTest extends TestCase
         $em->flush();
 
         $service = new StockReconciliationPersistenceService(
-            $em,
+            new StockTransactionRepository($em),
             new StockLevelRepository($em),
             new StockMovementRepository($em),
             new StockReconciliationService(),
@@ -122,7 +123,7 @@ final class StockMovementPersistenceServiceTest extends TestCase
         $em->flush();
 
         $service = new StockSupplyPersistenceService(
-            $em,
+            new StockTransactionRepository($em),
             new StockLevelRepository($em),
             new StockMovementRepository($em),
         );
@@ -194,7 +195,7 @@ final class StockMovementPersistenceServiceTest extends TestCase
         $em->flush();
 
         $service = new StockSupplyPersistenceService(
-            $em,
+            new StockTransactionRepository($em),
             new StockLevelRepository($em),
             new StockMovementRepository($em),
         );

@@ -1,6 +1,6 @@
 {
   "name": "stocking/stock",
-  "description": "SmartResponsor Stocking component: owns inventory availability, stock levels, reservations, incoming quantities, adjustments, and movements across stock locations.",
+  "description": "Stocking component for the multi-domain SaaS platform: owns inventory availability, stock levels, reservations, incoming quantities, adjustments, and movements across stock locations.",
   "type": "symfony-bundle",
   "license": "proprietary",
   "minimum-stability": "dev",
@@ -10,6 +10,7 @@
     "collectioning/collection": "dev-master",
     "cruding/crud": "dev-master",
     "doctrine/doctrine-bundle": "^3.3",
+    "doctrine/doctrine-migrations-bundle": "^4.0",
     "doctrine/orm": "^3.7",
     "easycorp/easyadmin-bundle": "^5.5",
     "interfacing/interface": "dev-master",
@@ -21,10 +22,11 @@
     "viewing/view": "dev-master"
   },
   "require-dev": {
-    "doctrine/doctrine-migrations-bundle": "^4.0",
     "friendsofphp/php-cs-fixer": "^3.95",
     "phpstan/phpstan": "^2.2",
     "phpunit/phpunit": "^13.3",
+    "symfony/panther": "^2.4",
+    "symfony/test-pack": "^1.2",
     "gating/gate": "dev-master"
   },
   "autoload": {
@@ -117,6 +119,7 @@
   },
   "scripts": {
     "test": "phpunit",
+    "test:ui": "npm test",
     "test:coverage": [
       "@php -r \"if (!is_dir('var/coverage')) { mkdir('var/coverage', 0777, true); }\"",
       "@php -d xdebug.mode=coverage vendor/bin/phpunit --branch-coverage --coverage-text=var/coverage/summary.txt"
@@ -126,15 +129,22 @@
     "lint:container": "php bin/console lint:container --env=test",
     "db:schema:validate": "php bin/console doctrine:schema:validate --skip-sync --env=test",
     "db:migrations:status": "php bin/console doctrine:migrations:status --env=test",
+    "db:schema:parity": [
+      "@php -r \"@unlink('var/cache/dev/stocking.db');\"",
+      "@php bin/console doctrine:migrations:migrate --no-interaction --env=test",
+      "@php bin/console doctrine:schema:validate --env=test",
+      "@php bin/console doctrine:migrations:up-to-date --env=test"
+    ],
     "cs:check": "php-cs-fixer fix --dry-run --diff --verbose",
     "cs:fix": "php-cs-fixer fix --verbose",
-    "gate": "@php vendor/bin/gating check --target=. --profile=config/gating/profile.yaml --policy-root=vendor/gating/gate/.gating --severity-config=vendor/gating/gate/.gating/config/severity.yaml",
+    "gate": "@php vendor/bin/gating check --target=. --profile=config/gating/stock_profile.yaml --policy-root=vendor/gating/gate/.gating --severity-config=vendor/gating/gate/.gating/config/severity.yaml",
     "quality": [
       "@test:coverage",
+      "@test:ui",
       "@phpstan",
       "@lint:yaml",
       "@lint:container",
-      "@db:schema:validate",
+      "@db:schema:parity",
       "@db:migrations:status",
       "@cs:check",
       "@gate"

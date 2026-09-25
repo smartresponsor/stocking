@@ -11,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 #[ORM\Entity]
 #[ORM\Table(name: 'stock_movement')]
+#[ORM\UniqueConstraint(name: 'uniq_stock_movement_idempotency', columns: ['idempotency_key'])]
+#[ORM\Index(name: 'idx_stock_movement_level_time', columns: ['stock_item_id', 'location_reference', 'occurred_at'])]
 final readonly class StockMovementEntity
 {
     public const TYPE_RECEIPT = 'receipt';
@@ -27,7 +29,7 @@ final readonly class StockMovementEntity
         #[ORM\Id]
         #[ORM\Column(type: 'string', length: 64)]
         public string $id,
-        #[ORM\Column(name: 'idempotency_key', type: 'string', length: 128, unique: true)]
+        #[ORM\Column(name: 'idempotency_key', type: 'string', length: 128)]
         public string $idempotencyKey,
         #[ORM\Column(name: 'stock_item_id', type: 'string', length: 64)]
         public string $stockItemId,

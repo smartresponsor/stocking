@@ -129,3 +129,63 @@ M1-M3 are implemented with direct Doctrine runtime dependencies, entity mapping,
 - Consumer `.gating/` is now left for generated artifact state only; its explanatory README was moved to `docs/architecture/gating-artifact-surface.md`.
 - Final `composer quality`: PASS, including PHPUnit 49 tests / 141 assertions, coverage 93.0% lines / 80.2% methods / 85.7% branches, PHPStan, YAML/container lint, Doctrine mapping/migration checks, PHP-CS-Fixer, and Gating 18/18 with zero failures/warnings/suppressions/skips.
 
+## 2026-09-24 RC revalidation and Objecting version-canon repair
+
+### Reconnaissance baseline
+
+- Re-read the live Stocking README, Composer manifest, current CMCP journal, failing Doctrine metadata integration test, and `StockLevelEntity`.
+- Re-read current Canonization agent guidance and the normative Canon040 coverage rule, plus current Gating package-facing contracts.
+- Re-read current Objecting, Cruding, Viewing, and Interfacing package-facing guidance/Composer surfaces relevant to Stocking ownership.
+- Confirmed `stocking/stock` still maps to `App\\Stocking\\` with Symfony-oriented typed layers and no Domain/Port/Adapter/Adaptor topology.
+- Confirmed Objecting, Cruding, Viewing, and Interfacing remain production Composer dependencies with local sibling path repositories using symlinks.
+- Preserved pre-existing `.gating/**` worktree material; it is unrelated to this repair.
+
+### Market and maturity baseline
+
+- Mature inventory systems continue to treat warehouse/location stock, reservations, lot/serial traceability, expiry handling, reconciliation, and replay-safe integration as baseline operational capabilities.
+- Stocking already owns the RC-relevant inventory facts/reservation/movement/reconciliation/ATP boundary. Forecasting, richer allocation optimization, procurement ownership, barcode/mobile UX, and wider ERP orchestration remain growth work unless future correctness requirements make them mandatory.
+
+### Target-to-canon mapping
+
+- Canonization/Objecting require entity-native persisted system-field names; the optimistic-lock field is `version`, not the legacy metadata name `objectVersion`.
+- `StockLevelEntity` already consumes `ObjectVersionEmbeddableTrait`; the live Doctrine metadata exposes `version` as the version field.
+- Canon040 remains applicable to executable PHP coverage and is independent of the metadata-name repair.
+
+### RC-critical repair
+
+- `composer quality` reproduced one failure in `StockDoctrineMetadataTest`: expected `objectVersion`, actual `version`.
+- Updated only the stale integration-test expectation to `version`; no production behavior or inventory boundary was changed.
+
+### Growth workstream
+
+- Keep forecasting, advanced allocation/optimization, procurement workflows, barcode/offline warehouse UX, and lot/serial/expiry expansion outside this RC repair.
+
+### Gates
+
+- PHPUnit: PASS, 49 tests / 142 assertions.
+- Canon040 coverage producer: PASS; branch-aware coverage summary regenerated.
+- PHPStan: PASS.
+- PHP-CS-Fixer dry-run: PASS after line-ending normalization.
+- Symfony YAML/container lint: PASS.
+- Canon030 schema parity: PASS on a freshly reset disposable SQLite database; migration baseline applies cleanly, Doctrine reports mapping/schema synchronization, and migrations are up to date.
+- Canon041 repository-local Playwright harness: PASS, 1 executable smoke test.
+- Composer strict validation with lock verification: PASS.
+- Current Gating profile contract: PASS.
+- Canon055 root Stocking documentation/package terminology was normalized to neutral multi-domain platform vocabulary.
+- Aggregate `composer quality` reaches only one residual failure: Canon055 scans pre-existing unrelated `.gating/**` and `var/gating-spill-20260921/**` artifact copies. The rule implementation has no profile/CLI path exclusion, although Canon055's textual scope is current human-facing documentation. Those pre-existing artifact surfaces are intentionally preserved and were not rewritten as Stocking product content.
+
+### Canon repairs completed in this pass
+
+- Canon047: direct Doctrine manager access moved from persistence services to `StockTransactionRepository`.
+- Canon054: application-owned uniqueness now uses deterministic named constraints; reservation/movement operational indexes are represented in Entity metadata; baseline `version` default matches Objecting metadata.
+- Canon038/profile contract: Gating profile moved to `config/gating/stock_profile.yaml` and updated to the current identity schema.
+- Canon037: generated `config/reference.php` removed from Git tracking and ignored.
+- Canon030: executable fresh-database schema parity added to aggregate quality.
+- Canon041: Symfony Test Pack, Panther, Playwright package/config, and executable UI-tooling smoke added.
+- Canon055: Stocking-owned README and Composer descriptions no longer use the consumer identity as platform identity.
+
+### Residual external enforcement blocker
+
+- Stocking-owned code/config/docs are green under all directly executable checks above.
+- Full Gating remains red only because Canon055 traverses unrelated pre-existing artifact trees without an exclusion mechanism. Resolving that enforcement-scope defect belongs to Gating; mutating those unrelated dirty artifacts from the Stocking run would violate workspace-change ownership.
+

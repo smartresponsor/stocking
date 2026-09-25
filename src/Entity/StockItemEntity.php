@@ -11,13 +11,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 #[ORM\Entity]
 #[ORM\Table(name: 'stock_item')]
+#[ORM\UniqueConstraint(name: 'uniq_stock_item_catalog_reference', columns: ['catalog_reference'])]
 final class StockItemEntity
 {
     public function __construct(
         #[ORM\Id]
         #[ORM\Column(type: 'string', length: 64)]
         private readonly string $id,
-        #[ORM\Column(name: 'catalog_reference', type: 'string', length: 128, unique: true)]
+        #[ORM\Column(name: 'catalog_reference', type: 'string', length: 128)]
         private readonly string $catalogReference,
     ) {
         if ('' === trim($this->id)) {

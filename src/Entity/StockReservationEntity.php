@@ -11,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 #[ORM\Entity]
 #[ORM\Table(name: 'stock_reservation')]
+#[ORM\UniqueConstraint(name: 'uniq_stock_reservation_idempotency', columns: ['idempotency_key'])]
+#[ORM\Index(name: 'idx_stock_reservation_level_status', columns: ['stock_item_id', 'location_reference', 'status'])]
 final class StockReservationEntity
 {
     public const STATUS_ACTIVE = 'active';
@@ -22,7 +24,7 @@ final class StockReservationEntity
         #[ORM\Id]
         #[ORM\Column(type: 'string', length: 64)]
         private readonly string $id,
-        #[ORM\Column(name: 'idempotency_key', type: 'string', length: 128, unique: true)]
+        #[ORM\Column(name: 'idempotency_key', type: 'string', length: 128)]
         private readonly string $idempotencyKey,
         #[ORM\Column(name: 'stock_item_id', type: 'string', length: 64)]
         private readonly string $stockItemId,
