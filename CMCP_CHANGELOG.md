@@ -192,3 +192,13 @@ M1-M3 are implemented with direct Doctrine runtime dependencies, entity mapping,
 - Clean-snapshot `composer quality`: PASS. PHPUnit 49/49 (142 assertions), Playwright 1/1, PHPStan, YAML/container lint, fresh-database migration/schema parity, migration currentness, PHP-CS-Fixer, and Gating 9/9 all passed with zero failures/warnings/suppressions/skips.
 - After the subsequent commit lifecycle, the previously untracked generated `.gating/**` and ignored `var/gating-spill-20260921/**` spill copies were no longer physically present. The tracked pre-existing `.gating/README.md` was restored exactly to its earlier modified content; no temporary `.cmcp-preserve` paths remain.
 
+## 2026-09-24 production publishability continuation
+
+- Current HEAD `08c509d` is repository-clean before this continuation and already contains the RC capability/canon work from the parallel Stocking workflow.
+- Aggregate `composer quality`: PASS, including PHPUnit 49/49 with 142 assertions, Playwright 1/1, PHPStan, YAML/container lint, fresh SQLite migration/schema parity, migration currentness, PHP-CS-Fixer, and the current default Gating local-dev profile 9/9.
+- Persistent coverage remains above Canon040 thresholds: lines 92.99% (518/557), methods 80.72% (67/83), branches 85.77% (211/246).
+- Current Gating `origin/master` (`9abccf1`) intentionally defaults `check` to `local-dev.yaml`; explicit RC release validation therefore uses `release.yaml`. Stocking release gate: PASS, 15 rules / 0 failed / 0 warning / 4 skipped.
+- Production Composer closure was completed with confirmed first-party VCS remotes. Objecting, Cruding, Viewing, Interfacing and Gating resolve from published `dev-master`; Collectioning is pinned to published `dev-collection-query-hardening`; Tabling is pinned to published `dev-initial-platform-primitive` because those repositories do not expose a usable canonical `origin/master` package snapshot.
+- `composer validate composer.prod.json --strict --no-interaction`: PASS. A longer network resolution dry-run triggered Console MCP process restarts, so branch/package resolvability was verified independently through fresh Git fetches and exact remote composer package identities instead of treating the unstable transport as a package failure.
+- Stocking itself still has no Git remote. GitHub searches in the connected installation and `smartresponsor` organization found no existing Stocking/stock/inventory repository, and the available GitHub connector exposes no repository-create action.
+
