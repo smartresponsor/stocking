@@ -120,6 +120,7 @@
   "scripts": {
     "test": "phpunit",
     "test:ui": "npm test",
+    "validate:prod": "composer validate --strict --no-check-all composer.prod.json",
     "test:coverage": [
       "@php -r \"if (!is_dir('var/coverage')) { mkdir('var/coverage', 0777, true); }\"",
       "@php -d xdebug.mode=coverage vendor/bin/phpunit --branch-coverage --coverage-text=var/coverage/summary.txt"
@@ -139,6 +140,7 @@
     "cs:fix": "php-cs-fixer fix --verbose",
     "gate": "@php vendor/bin/gating check --target=. --profile=config/gating/stock_profile.yaml --policy-root=vendor/gating/gate/.gating --severity-config=vendor/gating/gate/.gating/config/severity.yaml",
     "quality": [
+      "@validate:prod",
       "@test:coverage",
       "@test:ui",
       "@phpstan",

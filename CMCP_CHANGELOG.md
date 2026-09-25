@@ -202,3 +202,46 @@ M1-M3 are implemented with direct Doctrine runtime dependencies, entity mapping,
 - `composer validate composer.prod.json --strict --no-interaction`: PASS. A longer network resolution dry-run triggered Console MCP process restarts, so branch/package resolvability was verified independently through fresh Git fetches and exact remote composer package identities instead of treating the unstable transport as a package failure.
 - Stocking initially had no usable Git remote, but a concurrent repository-provisioning action subsequently created/configured `origin` as `git@github.com:smartresponsor/stocking.git`. From a clean worktree at signed commit `169200f`, the guarded `push_current_set_upstream` flow succeeded, created `origin/master`, and set local `master` to track it. Stocking production package publication is therefore no longer blocked.
 
+## 2026-09-25 autonomous RC release-readiness pass
+
+### Reconnaissance baseline
+
+- Read the authoritative task specification, current Stocking README, Composer development/production manifests, architecture boundary and Ordering/Shipping integration contract, product roadmap/competitor baseline, capability audit, Gating profile, PHPUnit/PHPStan/package test configuration, and this journal.
+- Re-read the current package-facing contracts for Objecting, Cruding, Viewing, Interfacing, and Gating, including available AGENTS/README/Composer/MANIFEST material; Canonization remained read-only and its normative rule documents were used rather than relying on Gating summaries alone.
+- Consulted Canon020, Canon023, Canon031, Canon040, Canon055 and the current Canonization guard matrix; existing Stocking topology remains `App\\Stocking\\`, Symfony technical-role first, no Domain/Port/Adapter/Adaptor taxonomy, local first-party path repositories use symlinks, and generic CRUD remains outside Stocking.
+- Verified local dependency wiring and Git state. Stocking is on `master`, aligned with `origin/master`; pre-existing dirty state is confined to generated/copied `.gating/**` material and is preserved untouched.
+- Current deterministic baseline is green: Composer strict validation/check-lock, PHPUnit 49 tests / 142 assertions, PHPStan level 8, PHP-CS-Fixer dry-run, Symfony YAML/container lint, fresh Doctrine schema parity, migration currentness, and the configured Gating profile.
+
+### Market and maturity split
+
+- Current primary evidence from Medusa, Vendure, Odoo, and ERPNext continues to support location-scoped stock facts, reservations/allocations, replenishment, inventory movement traceability, and explicit backorder policy as baseline mature inventory behavior.
+- RC-critical work remains correctness, replay safety, concurrency, schema/package determinism, and release evidence for the already-implemented Stocking boundary.
+- Growth remains separate: kits/BOM, lot/serial/expiry depth, barcode/offline warehouse UX, advanced picking/allocation optimization, forecasting/safety stock, and procurement workflows.
+
+### RC-critical work selected
+
+- Close a release-readiness gap in the aggregate quality contract: `composer.prod.json` existed and had been manually validated, but `composer quality` did not deterministically validate the production manifest.
+- Added `validate:prod` and made it the first aggregate quality step so production package-schema drift fails locally before expensive test/coverage work.
+
+### Gates to run
+
+- Development Composer strict validation/check-lock.
+- Production Composer strict validation through `validate:prod`.
+- Aggregate `composer quality`, including coverage, Playwright, PHPStan, Symfony lint, fresh Doctrine schema parity/migration status, CS check, and Gating.
+- Final Git status/diff inspection, preserving unrelated `.gating/**` state.
+
+### Verification result
+
+- Development Composer strict validation/check-lock: PASS.
+- Production `validate:prod`: PASS; `composer.prod.json` is valid.
+- PHPUnit branch coverage: PASS, 49 tests / 142 assertions; lines 92.99% (518/557), methods 80.72% (67/83), branches 85.77% (211/246), above Canon040 thresholds.
+- Playwright repository harness: PASS, 1/1.
+- PHPStan level 8: PASS.
+- Symfony YAML/container lint: PASS.
+- Fresh Doctrine migration/schema parity and migration currentness: PASS.
+- PHP-CS-Fixer dry-run: PASS.
+- Gating configured profile: PASS, 9 rules / 0 failed / 0 warning / 0 suppressed / 0 skipped.
+- A single aggregate `composer quality` invocation exceeded the Console MCP orchestration-call timeout, so it is not claimed as an aggregate pass; every constituent command in that script was executed directly and passed, including the newly added production-manifest validation.
+- No browser/mobile application behavior or UI source changed; visual screenshot evidence is therefore not applicable to this patch.
+
+
