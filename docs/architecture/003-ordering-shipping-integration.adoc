@@ -50,7 +50,7 @@ Expiry releases only the reserved bucket, is retry-safe, and remains independent
 
 All mutation commands carry idempotency identities. `StockLevelEntity` uses Objecting's Doctrine optimistic version field so stale parallel writers fail rather than silently oversell physical inventory.
 
-The composition layer may retry a failed command with the same idempotency identity. It must not generate a new key for an uncertain retry of the same logical operation.
+The composition layer may retry a failed command with the same idempotency identity only when the command parameters are identical. Reusing a reservation idempotency key with a different reservation identity, stock item, location, quantity, or expiry is a command conflict and is rejected. It must not generate a new key for an uncertain retry of the same logical operation.
 
 == Not owned here
 

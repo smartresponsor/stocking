@@ -259,6 +259,52 @@ M1-M3 are implemented with direct Doctrine runtime dependencies, entity mapping,
 - Post-fix verification is GREEN: development Composer strict validation/check-lock PASS; production `validate:prod` PASS; PHPUnit coverage PASS (49 tests / 142 assertions; lines 92.99%, methods 80.72%, branches 85.77%); Playwright 1/1 PASS; PHPStan level 8 PASS; Symfony YAML/container lint PASS; Doctrine fresh schema parity and migrations status PASS; PHP-CS-Fixer dry-run PASS; Gating 9/9 PASS with zero failures or warnings.
 - No UI/runtime behavior changed; visual evidence remains not applicable.
 
+## 2026-09-26 reservation idempotency hardening
+
+### Reconnaissance baseline
+
+- Read the authoritative Stocking execution specification, repository README, Composer/package manifests, architecture boundary, roadmap, competitor baseline, current CMCP journal, and live reservation persistence/entity/test surfaces.
+- Re-read current package-facing contracts for Objecting, Cruding, Viewing, Interfacing, and Gating.
+- Re-read normative Canonization rules Canon019, Canon020, Canon021, Canon022, Canon041, and Canon053 and mapped them against Stocking's tree, dependency contour, and test tooling.
+- Verified Git baseline on `master` aligned with `origin/master`; pre-existing `.gating/README.md` remains an unrelated dirty path and is preserved untouched.
+- RC diagnose was GREEN before mutation; no speculative capability work was selected.
+
+### Market and maturity split
+
+- Mature inventory baselines continue to include location-scoped stock, reservations, stock movement/reconciliation, replenishment, and forecast/incoming facts.
+- Reused idempotency identities must represent the same logical command; changed command parameters are a conflict rather than an exact replay.
+- RC-critical work therefore remains correctness and replay safety inside Stocking's existing reservation boundary.
+- Growth remains separate: forecasting/safety-stock optimization, barcode/offline warehouse UX, kits/BOM, lot/serial/expiry depth, procurement ownership, and advanced allocation.
+
+### RC-critical repair
+
+- Found that `StockReservationPersistenceService::reserve()` described an exact replay but compared only stock item, location, and quantity when an idempotency key already existed.
+- The same key could therefore be reused with a different reservation identity or expiration while incorrectly returning the original reservation.
+- Exact replay matching now includes reservation identity and expiry in addition to stock item, location, and quantity. The caller's `now` timestamp is intentionally not part of replay identity because a legitimate retry may occur later.
+- Added regression tests for changed reservation identity and changed expiration; corrected the prior exact-replay test so it actually replays the same reservation command.
+- Updated the Ordering/Shipping integration contract with the exact replay rule.
+
+### Target-to-canon mapping
+
+- Canon019/020: repair remains in `src/Service` and introduces no alternative layer taxonomy.
+- Canon021: no CRUD surface is introduced.
+- Canon022/053: direct platform dependencies and permitted sibling symlink contour are unchanged.
+- Canon041: repository-local PHPUnit/Panther/Playwright tooling remains present; no user-visible UI behavior changed, so screenshot evidence is not applicable.
+
+### Verification
+
+- PHPUnit: PASS, 51 tests / 144 assertions.
+- Production Composer validation: PASS.
+- PHPStan level 8: PASS.
+- PHP-CS-Fixer dry-run: PASS.
+- Symfony YAML/container lint: PASS.
+- Fresh Doctrine schema parity: PASS.
+- Doctrine migrations status: PASS; current baseline is applied and up to date.
+- Gating profile: PASS, 9/9 rules with zero failures/warnings/suppressions/skips.
+- Branch coverage producer: PASS; persistent summary remains above Canon040 thresholds at 92.99% lines, 80.72% methods, 85.77% branches.
+- Playwright: PASS, 1/1 repository harness test.
+- Aggregate `composer quality` was initially deferred by Console MCP runtime-capacity policy; every constituent gate relevant to this repair was executed and passed individually.
+
 
 
 

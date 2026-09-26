@@ -50,7 +50,7 @@ final class StockReservationPersistenceServiceTest extends TestCase
         $replayed = $service->reserve(
             'stock-1',
             'loc-1',
-            'reservation-other-id',
+            'reservation-1',
             'retry-1',
             1,
             new \DateTimeImmutable('2026-09-21T13:00:00+00:00'),
@@ -103,6 +103,66 @@ final class StockReservationPersistenceServiceTest extends TestCase
             2,
             new \DateTimeImmutable('2026-09-21T13:00:00+00:00'),
             new \DateTimeImmutable('2026-09-21T12:00:00+00:00'),
+        );
+    }
+
+    public function testIdempotencyKeyCannotBeReusedForDifferentReservationIdentity(): void
+    {
+        $em = $this->entityManager();
+        (new SchemaTool($em))->createSchema($em->getMetadataFactory()->getAllMetadata());
+        $em->persist(new StockLevelEntity('stock-1', 'loc-1', onHand: 3));
+        $em->flush();
+
+        $service = $this->service($em);
+        $service->reserve(
+            'stock-1',
+            'loc-1',
+            'reservation-1',
+            'retry-1',
+            1,
+            new \DateTimeImmutable('2026-09-21T13:00:00+00:00'),
+            new \DateTimeImmutable('2026-09-21T12:00:00+00:00'),
+        );
+
+        $this->expectException(\InvalidArgumentException::class);
+        $service->reserve(
+            'stock-1',
+            'loc-1',
+            'reservation-2',
+            'retry-1',
+            1,
+            new \DateTimeImmutable('2026-09-21T13:00:00+00:00'),
+            new \DateTimeImmutable('2026-09-21T12:01:00+00:00'),
+        );
+    }
+
+    public function testIdempotencyKeyCannotBeReusedForDifferentExpiration(): void
+    {
+        $em = $this->entityManager();
+        (new SchemaTool($em))->createSchema($em->getMetadataFactory()->getAllMetadata());
+        $em->persist(new StockLevelEntity('stock-1', 'loc-1', onHand: 3));
+        $em->flush();
+
+        $service = $this->service($em);
+        $service->reserve(
+            'stock-1',
+            'loc-1',
+            'reservation-1',
+            'retry-1',
+            1,
+            new \DateTimeImmutable('2026-09-21T13:00:00+00:00'),
+            new \DateTimeImmutable('2026-09-21T12:00:00+00:00'),
+        );
+
+        $this->expectException(\InvalidArgumentException::class);
+        $service->reserve(
+            'stock-1',
+            'loc-1',
+            'reservation-1',
+            'retry-1',
+            1,
+            new \DateTimeImmutable('2026-09-21T13:30:00+00:00'),
+            new \DateTimeImmutable('2026-09-21T12:01:00+00:00'),
         );
     }
 

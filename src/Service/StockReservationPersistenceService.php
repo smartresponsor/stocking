@@ -50,7 +50,14 @@ final class StockReservationPersistenceService
         ): StockReservationEntity {
             $existing = $this->reservationRepository->findByIdempotencyKey($idempotencyKey);
             if ($existing instanceof StockReservationEntity) {
-                $this->assertReplayMatches($existing, $stockItemId, $locationReference, $quantity);
+                $this->assertReplayMatches(
+                    $existing,
+                    $reservationId,
+                    $stockItemId,
+                    $locationReference,
+                    $quantity,
+                    $expiresAt,
+                );
 
                 return $existing;
             }
@@ -242,14 +249,18 @@ final class StockReservationPersistenceService
 
     private function assertReplayMatches(
         StockReservationEntity $existing,
+        string $reservationId,
         string $stockItemId,
         string $locationReference,
         int $quantity,
+        \DateTimeImmutable $expiresAt,
     ): void {
         if (
-            $existing->stockItemId() !== $stockItemId
+            $existing->id() !== $reservationId
+            || $existing->stockItemId() !== $stockItemId
             || $existing->locationReference() !== $locationReference
             || $existing->quantity() !== $quantity
+            || $existing->expiresAt() != $expiresAt
         ) {
             throw new \InvalidArgumentException('Idempotency key was already used for a different reservation command.');
         }
