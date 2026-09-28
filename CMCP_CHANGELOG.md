@@ -305,6 +305,52 @@ M1-M3 are implemented with direct Doctrine runtime dependencies, entity mapping,
 - Playwright: PASS, 1/1 repository harness test.
 - Aggregate `composer quality` was initially deferred by Console MCP runtime-capacity policy; every constituent gate relevant to this repair was executed and passed individually.
 
+## 2026-09-28 autonomous canon remediation
+
+### Reconnaissance baseline
+
+- Read the authoritative Stocking execution specification, current README, Composer development/production manifests, architecture/product documentation, capability audit, current Git state/diff, and prior CMCP journal.
+- Re-read current package-facing README/Composer contracts for Objecting, Cruding, Viewing, Interfacing, and Gating.
+- Re-read normative Canonization Canon052, Canon064, Canon065, Canon066 and the current guard matrix; inspected the executable Gating Canon052 rule and its unit contract.
+- Consumed fresh upstream evidence for fingerprint `5db0e59db64a147cec691785a1bc30d500e45f4503e218e5219775b16a01357c` before any duplicate verifier run: Gating had one hard failure (Canon052), Canon040/042 warnings, and Inspecting had one medium long-method observation in `StockTransferPersistenceService::transfer()`.
+- Development/production dependency contour remains canonical: Objecting, Cruding, Viewing, and Interfacing are direct application dependencies; Gating is a development/verification dependency with a symlinked local development repository and packaged production metadata.
+
+### Market and maturity split
+
+- Existing Stocking competitor evidence remains aligned with mature inventory practice: location-scoped quantity facts, reservations/allocations, movement traceability, replenishment, and explicit backorder/promise policy are RC-relevant.
+- RC-critical work in this pass is repository/canon hygiene and deterministic verification. Forecasting, advanced allocation optimization, kits/BOM, lot/serial/expiry depth, barcode/offline UX, procurement ownership, and wider ERP orchestration remain growth work.
+
+### Canon052 remediation
+
+- The RED report proved that a copied executable Gating tree had repopulated consumer `.gating/`, which Canon052 explicitly prohibits.
+- Preserved the entire copied tree non-destructively by moving it to ignored `var/gating-spill-20260928-094655/`.
+- Restored the tracked non-executable consumer `.gating/README.md` exactly to its canonical artifact-boundary content.
+- Added `/.console-mcp/` to the repository-noise ignore surface because it is Console MCP execution-state, not Stocking source.
+- No Stocking runtime/API/UI behavior changed.
+
+### Gates selected
+
+- Refresh branch-aware PHPUnit coverage to clear stale Canon040 evidence.
+- Run repository Playwright smoke because the test surface exists, while visual screenshot evidence remains not applicable because no UI behavior changed.
+- Re-run Composer validation, PHPStan, PHP-CS-Fixer, Symfony YAML/container lint, Doctrine schema parity/migration status, Gating, and post-mutation Inspecting.
+- Inspect final Git/worktree/upstream state, create one coherent signed commit, and publish if all applicable gates are acceptable.
+
+### Verification result
+
+- Root Composer strict/check-lock validation: PASS.
+- Production Composer validation: PASS.
+- Aggregate named `quality` check: PASS.
+- PHPUnit coverage: PASS, 51 tests / 144 assertions; coverage evidence regenerated.
+- Playwright repository harness: PASS, 1/1.
+- PHPStan: PASS.
+- PHP-CS-Fixer dry-run: PASS.
+- Symfony YAML lint and container lint: PASS.
+- Doctrine fresh schema parity and migrations currentness: PASS.
+- Gating profile: PASS, 9/9 with zero failed/warning/suppressed/skipped.
+- Canon052 topology proof: consumer `.gating/` now exposes only the canonical non-executable README; no `App\\Gating` executable namespace remains under the Stocking source/artifact scan.
+- No user-observable UI behavior changed; screenshots are not applicable.
+- The fresh upstream Inspecting evidence remains applicable because no `src/` file changed. A redundant direct post-remediation Inspecting invocation timed out at the execution plane and produced no replacement result; the existing medium long-method observation remains non-blocking evidence rather than a canon failure.
+
 
 
 
