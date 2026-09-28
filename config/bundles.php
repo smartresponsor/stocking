@@ -5,6 +5,7 @@ declare(strict_types=1);
 $bundles = [
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
     Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => ['all' => true],
+    App\Failing\FailingBundle::class => ['all' => true],
     App\Stocking\StockingBundle::class => ['all' => true],
 ];
 

@@ -9,6 +9,7 @@
     "php": "^8.4",
     "collectioning/collection": "dev-collection-query-hardening",
     "cruding/crud": "dev-master",
+    "failing/failure": "dev-master",
     "doctrine/doctrine-bundle": "^3.3",
     "doctrine/doctrine-migrations-bundle": "^4.0",
     "doctrine/orm": "^3.7",
@@ -39,6 +40,11 @@
     "gating/gate": "dev-master"
   },
   "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/smartresponsor/failing.git",
+      "no-api": true
+    },
     {
       "type": "vcs",
       "url": "git@github.com:smartresponsor/objecting.git",
