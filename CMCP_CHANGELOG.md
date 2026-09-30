@@ -392,6 +392,63 @@ M1-M3 are implemented with direct Doctrine runtime dependencies, entity mapping,
 - A fresh standalone Inspecting call timed out at the execution plane. No `src/` file changed in this remediation, so the supplied fresh Inspecting baseline remains representative of source quality: one medium long-method maintainability observation in `StockTransferPersistenceService::transfer()`, non-blocking for this Canon052 remediation.
 - Canon042 remains warning-only in the supplied full CanonScanning profile because no repository-owned behavioral/UI coverage denominator/evidence producer exists. This pass does not invent one; no user-visible UI behavior changed, so screenshot evidence is not applicable.
 
+## 2026-09-30 autonomous Canon052 remediation
+
+### Reconnaissance baseline
+
+- Read the authoritative engine specification in full, current Stocking README, development/production Composer manifests, Gating profile, package/test configuration, architecture/product documentation discovery, current CMCP journal, Git branch/upstream state, and fresh CanonScanning Gating/Inspecting evidence for fingerprint `f3a4b6f654123ca62fd619237f9ab786e429f70494a59b61544b2c46210c5ef1`.
+- Re-read the required application dependency contour for Objecting, Cruding, Viewing, and Interfacing, including available AGENTS/README/Composer/MANIFEST material, and confirmed all four remain explicit Stocking Composer dependencies with development path repositories using symlinks.
+- Re-read Canonization README/AGENTS, the normative `Canon052GatingIntegrationRule.md`, the guard matrix, Gating README/Composer/MANIFEST, and executable `Canon052GatingIntegrationRule.php`.
+- Git baseline: `master` equals `origin/master` at `e432b244edc5159b89f6c34dc5a2a6b096cf9226`; the only tracked dirty path was deleted `.gating/README.md`.
+- Fresh Gating evidence is RED only on Canon052 because consumer `.gating/` must remain generated-artifact state and may contain only a non-executable boundary README plus generated evidence/cache/checksum artifacts. Fresh Inspecting reports one medium long-method observation in `StockTransferPersistenceService::transfer()`; it is observational, not an automatic RC blocker.
+
+### Market and maturity split
+
+- Current primary Medusa, Shopify, and Odoo documentation confirms mature inventory expectations around per-location quantities, reservations/committed stock, explicit incoming quantities, stock transfers, and replenishment.
+- RC-critical work remains deterministic inventory correctness plus repository/canon hygiene and verification; Stocking already implements the bounded inventory facts/reservation/movement/reconciliation/ATP core.
+- Growth remains separate: kits/BOM depth, forecasting/safety-stock optimization, advanced allocation, lot/serial/expiry workflows, richer warehouse/mobile UX, and procurement orchestration.
+
+### Target-to-canon mapping
+
+- Canon052: Stocking correctly declares `gating/gate` as `dev-master`, exposes `../Gating` as a symlinked development path repository, declares the standard `gate` script, includes `@gate` in `quality`, and keeps production metadata free of local path repositories. The remaining failure was the missing canonical consumer `.gating/README.md`.
+- Objecting contract: Stocking remains the persistence owner for its business entities/migrations while consuming Objecting system-field contracts; no duplicate tenant/system-field model is introduced.
+- Cruding contract: Stocking has no generic CRUD controller or generic CRUD route ownership.
+- Viewing/Interfacing contracts: presentation/shell concerns remain dependency-owned; this remediation introduces no UI surface.
+- Symfony canon: default `App\\Stocking\\` namespace and typed Symfony-oriented roots remain unchanged; no Domain/Port/Adapter/Adaptor taxonomy is introduced.
+
+### RC-critical implementation
+
+- Restored the tracked, non-executable consumer `.gating/README.md` exactly to the canonical artifact-boundary content from HEAD.
+- No Stocking runtime, API, persistence, or UI behavior was changed.
+
+### Gates selected
+
+- Re-run the affected Gating check after mutation.
+- Run deterministic Composer validation, PHPUnit, PHPStan, Symfony YAML/container lint, Doctrine schema parity/migration status, PHP-CS-Fixer, and Playwright repository harness where admitted.
+- Re-inspect Git diff/status, then create one coherent signed commit and publish the branch when verification is green and publication remains safe.
+
+### Full-canon follow-up
+
+- Fresh CanonScanning run `20260930-161953` proved Canon052 is resolved and surfaced the newly active hard rule Canon067 as the only canon failure: `stocking/stock` must own `src/Entity/Stock/StockEntity.php`. Canon042 remains warning-only for missing behavioral/UI coverage evidence.
+- Read normative `Canon067RepositoryRootEntityRule.md` and its Gating mirror. The root Entity is a repository-owned persistence/composition anchor derived from the Composer subject token; additional inventory payload remains in dedicated entities.
+- Implemented minimal `App\\Stocking\\Entity\\Stock\\StockEntity` with a validated string identity and no speculative payload or sibling-owned relations.
+- Added `Version20260930212500RepositoryRootEntity` as a new forward-only migration creating the canonical `stock` table; the historical baseline migration remains unchanged.
+- Added focused entity tests for identity exposure and empty-identity rejection.
+- No browser/mobile UI, navigation, form, or interaction surface changed; visual screenshot evidence is not applicable.
+
+### Verification result
+
+- Aggregate `composer quality`: PASS after the repository-native `cs:fix` normalized the two new PHP files.
+- PHPUnit/coverage producer: PASS, 53 tests / 147 assertions.
+- Playwright repository harness: PASS, 1/1.
+- PHPStan, Symfony YAML/container lint, Doctrine fresh schema parity, migration currentness, PHP-CS-Fixer dry-run, production Composer validation, and local Gating profile: PASS.
+- Doctrine fresh migration path executes both migrations and reaches `Version20260930212500RepositoryRootEntity`; mapping and database schema are synchronized with zero pending migrations.
+- Changed-file PHP lint and `git diff --check`: PASS.
+- Fresh full CanonScanning run `20260930-162622`: 69 rules, 48 passed, 0 failed, 20 skipped, 1 warning. Canon052 and Canon067 are GREEN; the only residual warning is Canon042 because repository-owned behavioral/UI coverage evidence is not materialized.
+- Fresh Inspecting after the `src/` mutation reports one medium maintainability observation, unchanged in nature: `StockTransferPersistenceService::transfer()` spans 79 lines. It is non-autofixable and not promoted by canon/policy to an RC blocker.
+- Inspecting Semgrep exceeded its 60-second analyzer timeout; php-structure completed successfully. Deterministic repository security scanning in CanonScanning completed with exit code 0.
+- No user-observable UI behavior changed; screenshots are not applicable for this change.
+
 
 
 
