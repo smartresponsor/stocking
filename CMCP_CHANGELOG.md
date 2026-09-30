@@ -351,6 +351,49 @@ M1-M3 are implemented with direct Doctrine runtime dependencies, entity mapping,
 - No user-observable UI behavior changed; screenshots are not applicable.
 - The fresh upstream Inspecting evidence remains applicable because no `src/` file changed. A redundant direct post-remediation Inspecting invocation timed out at the execution plane and produced no replacement result; the existing medium long-method observation remains non-blocking evidence rather than a canon failure.
 
+## 2026-09-29 autonomous Canon052 remediation
+
+### Reconnaissance baseline
+
+- Read the authoritative engine specification, current README, development/production Composer manifests, Gating profile, architecture boundary, roadmap, competitor baseline, CMCP journal, and the current transfer persistence hot spot.
+- Consumed fresh CanonScanning evidence for fingerprint `f3a4b6f654123ca62fd619237f9ab786e429f70494a59b61544b2c46210c5ef1`: Gating is RED only on Canon052; Canon042 is warning-only because behavioral/UI coverage evidence is absent; Inspecting reports one medium maintainability observation for `StockTransferPersistenceService::transfer()`.
+- Re-read normative Canonization rules Canon019, Canon020, Canon021, Canon022, Canon041, Canon042, and Canon052, plus the executable Gating Canon052 mirror.
+- Verified `master` equals `origin/master`; the only tracked dirty path is `.gating/README.md`, whose content is the copied Gating owner README rather than the canonical Stocking consumer-boundary README.
+- Mandatory application dependencies Objecting, Cruding, Viewing, and Interfacing remain explicit runtime Composer dependencies; Gating remains the development verification dependency. No generic CRUD surface or alternative Domain/Port/Adapter taxonomy is introduced.
+
+### Market and maturity split
+
+- Current Medusa and Vendure primary documentation still supports location-scoped inventory levels, reservations/allocations, incoming quantity separation, fulfillment consumption, and explicit bounded backorder behavior as mature baseline capabilities already represented in Stocking.
+- RC-critical work is repository/canon hygiene and deterministic verification of the existing inventory boundary.
+- Growth remains separate: kits/BOM, advanced multi-location allocation optimization, forecasting/safety stock, richer warehouse/offline UX, lot/serial/expiry depth, and procurement workflows.
+
+### RC-critical work selected
+
+- Canon052 proves that the consumer `.gating/` artifact surface has again been populated with a copied executable Gating tree.
+- Remediation will preserve all spill non-destructively under ignored `var/`, restore only the canonical non-executable `.gating/README.md`, and avoid changing Stocking runtime/API/UI behavior.
+- After mutation, rerun the affected Gating check plus deterministic repository quality gates and post-mutation Inspecting.
+
+### Verification result
+
+- Canon052 remediation: PASS. The copied executable Gating tree is preserved under ignored `var/gating-spill-20260929-2105/`; tracked `.gating/README.md` exactly matches HEAD and is the only consumer-boundary tracked file.
+- Gating: PASS, 9/9 rules with zero failures, warnings, suppressions, or skips.
+- Root Composer strict/check-lock validation: PASS.
+- Production Composer validation: PASS.
+- PHPUnit: PASS, 51 tests / 144 assertions.
+- Branch coverage producer: PASS with Xdebug; persistent coverage summary regenerated.
+- PHPStan: PASS.
+- Symfony YAML lint: PASS.
+- Symfony container lint: PASS.
+- Doctrine fresh migration/schema parity: PASS; mapping and schema are synchronized.
+- Doctrine migration status: PASS; 1/1 executed, 0 new.
+- PHP-CS-Fixer dry-run: PASS.
+- Playwright: PASS, 1/1 repository harness test.
+- Aggregate `composer quality` was not admitted by Console MCP because runtime capacity was `ADMIT_LIGHT_ONLY` under high engine backlog. Every declared constituent gate was executed individually and passed.
+- A fresh standalone Inspecting call timed out at the execution plane. No `src/` file changed in this remediation, so the supplied fresh Inspecting baseline remains representative of source quality: one medium long-method maintainability observation in `StockTransferPersistenceService::transfer()`, non-blocking for this Canon052 remediation.
+- Canon042 remains warning-only in the supplied full CanonScanning profile because no repository-owned behavioral/UI coverage denominator/evidence producer exists. This pass does not invent one; no user-visible UI behavior changed, so screenshot evidence is not applicable.
+
+
+
 
 
 
